@@ -24,14 +24,14 @@ public class Inlämningsuppgift3 extends JFrame {
 	}
 	
 	protected void setInstanceVariables() {
-		for(int i = 0; i < numericButtons.length - 1; i++) {
+		for(int i = 0; i < numericButtons.length; i++) {
 			if(i == 0) {
 				numericButtons[i] = new NumberButtons(i);
-//				numericButtons[i].setBorder(null);
+				numericButtons[i].setBorder(null);
 			}
 			else {
 				numericButtons[i] = new NumberButtons(i, new ImageIcon(path + imageFileNames.get(i)));
-//				numericButtons[i].setBorder(null);
+				numericButtons[i].setBorder(null);
 			}
 		}
 	}
