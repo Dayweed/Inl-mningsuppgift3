@@ -2,6 +2,7 @@ package inlämningsuppgift3;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
@@ -25,13 +26,15 @@ public class Inlämningsuppgift3 extends JFrame {
 	
 	protected void setInstanceVariables() {
 		for(int i = 0; i < numericButtons.length; i++) {
-			if(i == 0) {
+			if(i == 15) {
 				numericButtons[i] = new NumberButtons(i);
-//				numericButtons[i].setBorder(null);
+				numericButtons[i].setBorder(null);
+				numericButtons[i].setContentAreaFilled(false);
 			}
 			else {
 				numericButtons[i] = new NumberButtons(i, new ImageIcon(path + imageFileNames.get(i)));
-//				numericButtons[i].setBorder(null);
+				numericButtons[i].setBorder(null);
+				numericButtons[i].setContentAreaFilled(false);
 			}
 		}
 	}
@@ -49,7 +52,7 @@ public class Inlämningsuppgift3 extends JFrame {
 	}
 	
 	protected void addComponents() {
-		panel.setLayout(new FlowLayout());
+		panel.setLayout(new GridLayout(4, 4));
 		panel.add(numericButtons[0]);
 		panel.add(numericButtons[1]);
 		panel.add(numericButtons[2]);
@@ -65,7 +68,7 @@ public class Inlämningsuppgift3 extends JFrame {
 		panel.add(numericButtons[12]);
 		panel.add(numericButtons[13]);
 		panel.add(numericButtons[14]);
-//		panel.add(numericButtons[15]);
+		panel.add(numericButtons[15]);
 //		panel.add(numericButtons[16]);
 //		panel.add(numericButtons[17]);
 		add(panel);
