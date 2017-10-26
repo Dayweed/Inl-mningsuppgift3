@@ -13,7 +13,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Inlämningsuppgift3 extends JFrame {
 	private JPanel panel = new JPanel();
-	private NumberButtons[] numericButtons = new NumberButtons[16];
+	private NumberButtons[][] numericButtons = new NumberButtons[4][4];
 	private List<String> imageFileNames = new ArrayList<>();
 	private final String path = "C:\\Users\\David\\Documents\\Skola\\Nackademin\\Objektorienterad programmering\\Inlämningar\\Inlämningsuppgift3\\Images buttons\\";
 	private final Path imageFolderPath = Paths.get(path);
@@ -25,16 +25,20 @@ public class Inlämningsuppgift3 extends JFrame {
 	}
 	
 	protected void setInstanceVariables() {
-		for(int i = 0; i < numericButtons.length; i++) {
-			if(i == 15) {
-				numericButtons[i] = new NumberButtons(i);
-				numericButtons[i].setBorder(null);
-				numericButtons[i].setContentAreaFilled(false);
-			}
-			else {
-				numericButtons[i] = new NumberButtons(i, new ImageIcon(path + imageFileNames.get(i)));
-				numericButtons[i].setBorder(null);
-				numericButtons[i].setContentAreaFilled(false);
+		int imageCounter = 0;
+		for(int i = 0; i < 4; i++) {
+			for(int j = 0; j < 4; j++) {
+				if(i == 15) {
+					numericButtons[i][j] = new NumberButtons(i);
+					numericButtons[i][j].setBorder(null);
+					numericButtons[i][j].setContentAreaFilled(false);
+				}
+				else {
+					numericButtons[i][j] = new NumberButtons(i, new ImageIcon(path + imageFileNames.get(imageCounter)));
+					numericButtons[i][j].setBorder(null);
+					numericButtons[i][j].setContentAreaFilled(false);
+				}
+				imageCounter++;
 			}
 		}
 	}
@@ -53,24 +57,23 @@ public class Inlämningsuppgift3 extends JFrame {
 	
 	protected void addComponents() {
 		panel.setLayout(new GridLayout(4, 4));
-		panel.add(numericButtons[0]);
-		panel.add(numericButtons[1]);
-		panel.add(numericButtons[2]);
-		panel.add(numericButtons[3]);
-		panel.add(numericButtons[4]);
-		panel.add(numericButtons[5]);
-		panel.add(numericButtons[6]);
-		panel.add(numericButtons[7]);
-		panel.add(numericButtons[8]);
-		panel.add(numericButtons[9]);
-		panel.add(numericButtons[10]);
-		panel.add(numericButtons[11]);
-		panel.add(numericButtons[12]);
-		panel.add(numericButtons[13]);
-		panel.add(numericButtons[14]);
-		panel.add(numericButtons[15]);
-//		panel.add(numericButtons[16]);
-//		panel.add(numericButtons[17]);
+		panel.add(numericButtons[0][0]);
+		panel.add(numericButtons[0][1]);
+		panel.add(numericButtons[0][2]);
+		panel.add(numericButtons[0][3]);
+		panel.add(numericButtons[1][0]);
+		panel.add(numericButtons[1][1]);
+		panel.add(numericButtons[1][2]);
+		panel.add(numericButtons[1][3]);
+		panel.add(numericButtons[2][0]);
+		panel.add(numericButtons[2][1]);
+		panel.add(numericButtons[2][2]);
+		panel.add(numericButtons[2][3]);
+		panel.add(numericButtons[3][0]);
+		panel.add(numericButtons[3][1]);
+		panel.add(numericButtons[3][2]);
+		panel.add(numericButtons[3][3]);
+
 		add(panel);
 		getContentPane().setBackground(Color.BLACK);
 		pack();
