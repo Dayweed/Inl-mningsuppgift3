@@ -2,6 +2,7 @@ package inlämningsuppgift3;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
@@ -9,7 +10,8 @@ import javax.swing.*;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class GamePanel extends JPanel{
-	private NumberButtons[][] numericButtons = new NumberButtons[4][4];
+	public NumberButtons[][] numericButtons = new NumberButtons[4][4];
+	private ButtonListener buttonEventListener = new ButtonListener();
 	private List<String> imageFileNames = new ArrayList<>();
 	private final String path = "C:\\Users\\David\\Documents\\Skola\\Nackademin\\Objektorienterad programmering\\Inlämningar\\Inlämningsuppgift3\\Images buttons\\";
 	private final Path imageFolderPath = Paths.get(path);
@@ -17,7 +19,9 @@ public class GamePanel extends JPanel{
 	public GamePanel() {
 		loadImagesFromFolder(imageFolderPath);
 		setInstanceVariables();
+//		numericButtons = shuffleDoubleArray(numericButtons);
 		addComponents();
+		setLayout();
 	}
 	
 	protected void setInstanceVariables() {
@@ -27,12 +31,16 @@ public class GamePanel extends JPanel{
 				if(i == 3 && j == 3) {
 					numericButtons[i][j] = new NumberButtons(i);
 					numericButtons[i][j].setBorder(null);
+					numericButtons[i][j].setFocusPainted(false);
 					numericButtons[i][j].setContentAreaFilled(false);
+					numericButtons[i][j].addActionListener(buttonEventListener);
 				}
 				else {
 					numericButtons[i][j] = new NumberButtons(i, new ImageIcon(path + imageFileNames.get(imageCounter)));
 					numericButtons[i][j].setBorder(null);
+					numericButtons[i][j].setFocusPainted(false);
 					numericButtons[i][j].setContentAreaFilled(false);
+					numericButtons[i][j].addActionListener(buttonEventListener);
 				}
 				imageCounter++;
 			}
@@ -52,29 +60,27 @@ public class GamePanel extends JPanel{
 	}
 	
 	protected void addComponents() {
-		setLayout(new GridLayout(4, 4));
+		for(int i = 0; i < 4; i++) {
+			for(int j = 0; j < 4; j++) {
+				add(numericButtons[i][j]);
+			}
+		}
+	}
+	
+	protected void setLayout() {		
+		setLayout(new GridLayout(4, 4, 0, 0));
 		setBackground(Color.BLACK);
-		add(numericButtons[0][0]);
-		add(numericButtons[0][1]);
-		add(numericButtons[0][2]);
-		add(numericButtons[0][3]);
-		add(numericButtons[1][0]);
-		add(numericButtons[1][1]);
-		add(numericButtons[1][2]);
-		add(numericButtons[1][3]);
-		add(numericButtons[2][0]);
-		add(numericButtons[2][1]);
-		add(numericButtons[2][2]);
-		add(numericButtons[2][3]);
-		add(numericButtons[3][0]);
-		add(numericButtons[3][1]);
-		add(numericButtons[3][2]);
-		add(numericButtons[3][3]);
-		
-//		for(int i = 0; i < 4; i++) {
-//			for(int j = 0; j < 4; j++) {
-//				add(numericButtons[i][j]);
-//			}
-//		}
+	}
+	
+	public static NumberButtons[][] shuffleDoubleArray(NumberButtons[][] arrayToshuffle) {
+		NumberButtons temp = new NumberButtons();
+		for(int i = 0; i < 100; i++) {
+			int randomIndex1 = (int) Math.random() * 4;
+			int randomIndex2 = (int) Math.random() * 4;
+			temp = arrayToshuffle[randomIndex1][randomIndex2];
+			arrayToshuffle[randomIndex1][randomIndex2] = arrayToshuffle[randomIndex2][randomIndex1];
+			arrayToshuffle[randomIndex2][randomIndex1] = temp;
+		}
+		return arrayToshuffle;
 	}
 }

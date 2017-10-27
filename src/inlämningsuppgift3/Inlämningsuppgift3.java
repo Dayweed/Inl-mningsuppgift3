@@ -1,12 +1,7 @@
 package inlämningsuppgift3; 
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.io.IOException;
-import java.nio.file.*;
-import java.util.*;
-import javax.swing.ImageIcon;
 import javax.swing.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
@@ -25,16 +20,15 @@ public class Inlämningsuppgift3 extends JFrame {
 	}
 	
 	protected void addComponents() {
-//		Dimension dim = new Dimension(100, 50);
 		getContentPane().setBackground(Color.BLACK);
-		setLayout(new FlowLayout());
+		setLayout(new BorderLayout());
 
 		
-		add(gamePanel);
-		add(meny);
+		add(gamePanel, BorderLayout.NORTH);
+		add(meny, BorderLayout.SOUTH);
 		pack();
-		setSize(220,310);
 		this.setLocation(900, 300);
+		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
