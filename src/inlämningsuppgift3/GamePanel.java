@@ -1,5 +1,6 @@
 package inlämningsuppgift3;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.nio.file.*;
@@ -14,6 +15,7 @@ public class GamePanel extends JPanel{
 	private final Path imageFolderPath = Paths.get(path);
 	
 	public GamePanel() {
+		loadImagesFromFolder(imageFolderPath);
 		setInstanceVariables();
 		addComponents();
 	}
@@ -51,6 +53,7 @@ public class GamePanel extends JPanel{
 	
 	protected void addComponents() {
 		setLayout(new GridLayout(4, 4));
+		setBackground(Color.BLACK);
 		add(numericButtons[0][0]);
 		add(numericButtons[0][1]);
 		add(numericButtons[0][2]);

@@ -4,7 +4,7 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 
 public class NumberButtons extends JButton{
-	private int value;
+	private final int value;
 	
 	public NumberButtons(int value) {
 		this.value = value;

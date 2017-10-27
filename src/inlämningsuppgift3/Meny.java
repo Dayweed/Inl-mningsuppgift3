@@ -1,5 +1,6 @@
 package inlämningsuppgift3;
 
+import java.awt.Color;
 import javax.swing.*;
 
 public class Meny extends JPanel{
@@ -17,6 +18,7 @@ public class Meny extends JPanel{
 	}
 	
 	protected void addComponents() {
+		setBackground(Color.BLACK);
 		add(newGame);
 		add(cancel);
 	}
