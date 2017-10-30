@@ -105,11 +105,12 @@ public class GamePanel extends JPanel{
 	
 	public void setPositionOfEmpty() {
 		for(int i = 0; i < 4; i++) {
-			for(int j = 0; j < 4; j++)
+			for(int j = 0; j < 4; j++) {
 				if(numericButtons[i][j].getValue() == 16) {
 					positionOfEmpty.setFirstPosition(i);
 					positionOfEmpty.setSecondPosition(j);
 				}
+			}
 		}
 		System.out.println(positionOfEmpty.getFirstPosition());
 		System.out.println(positionOfEmpty.getSecondPosition());
@@ -167,30 +168,32 @@ public class GamePanel extends JPanel{
 			numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition() + 1].setNextTo(true);
 			numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition() - 1].setNextTo(true);
 		}
+//		for(int i = 0; i < 4; i++) {
+//			for(int j = 0; j < 4; j++) {
+//				System.out.println(numericButtons[i][j].getIfNextTo());
+//			}
+//		}
 	}
 	
 	public void swapButtons(NumberButtons triggeredButton) {
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {
 				if(triggeredButton.equals(numericButtons[i][j])) {
-					NumberButtons temp = new NumberButtons();
-					temp = numericButtons[i][j];
-					numericButtons[i][j] = numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()];
-					numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()] = temp;
-					
-		setToFalse();
-		setPositionOfEmpty();
-		setNextToEmpty();
-					for(int k = 0; k < 4; k++) {
-						for(int l = 0; l < 4; l++) {
-							remove(numericButtons[k][l]);
-						}
-					}
-					for(int t = 0; t < 4; t++) {
-						for(int s = 0; s < 4; s++) {
-							add(numericButtons[t][s]);
-						}
-					}
+					NumberButtons temp;
+					temp = numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()];
+					numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()] = numericButtons[i][j];
+					numericButtons[i][j] = temp;
+					addComponents();
+//					for(int k = 0; k < 4; k++) {
+//						for(int l = 0; l < 4; l++) {
+//							remove(numericButtons[k][l]);
+//						}
+//					}
+//					for(int t = 0; t < 4; t++) {
+//						for(int s = 0; s < 4; s++) {
+//							add(numericButtons[t][s]);
+//						}
+//					}
 				}	
 			}
 		}
@@ -199,7 +202,9 @@ public class GamePanel extends JPanel{
 	public void updater(NumberButtons updateButton) {
 		swapButtons(updateButton);
 		revalidate();
-		repaint();
+		setToFalse();
+		setPositionOfEmpty();
+		setNextToEmpty();
 	}
 	
 	class ButtonListener implements ActionListener {
@@ -207,12 +212,9 @@ public class GamePanel extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			for(int i = 0; i < 4; i++) {
 				for(int j = 0; j < 4; j++) {
-					if(e.getSource() == numericButtons[i][j])
-						if(numericButtons[i][j].getIfNextTo()) {
-							updater(numericButtons[i][j]);
-						}
-					else
-							System.out.println("hej");
+					if(e.getSource().equals(numericButtons[i][j]) && numericButtons[i][j].getIfNextTo()) {
+						updater(numericButtons[i][j]);
+					}
 				}
 			}
 		}
