@@ -6,7 +6,7 @@ import javax.swing.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 public class Inlämningsuppgift3 extends JFrame {
-	private GamePanel gamePanel;
+	public GamePanel gamePanel;
 	private Meny meny;
 	
 	public Inlämningsuppgift3() {
@@ -16,14 +16,12 @@ public class Inlämningsuppgift3 extends JFrame {
 	
 	protected void setInstanceVariables() {
 		gamePanel = new GamePanel();
-		meny = new Meny("New game", "Cancel");
+		meny = new Meny("New game", "Cancel", gamePanel);
 	}
 	
 	protected void addComponents() {
 		getContentPane().setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
-
-		
 		add(gamePanel, BorderLayout.NORTH);
 		add(meny, BorderLayout.SOUTH);
 		pack();

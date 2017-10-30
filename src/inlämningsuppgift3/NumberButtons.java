@@ -4,18 +4,24 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 
 public class NumberButtons extends JButton{
-	private final int value;
+	private boolean nextToEmpty;
+	private int value;
 	
 	public NumberButtons(){
-		value = 0;
+		value = -1;
 	}
 	
-	public NumberButtons(int value) {
-		this.value = value;
-	}
-	
-	public NumberButtons(int value, Icon numberIcon) {
+	public NumberButtons(int value, boolean setFalse, Icon numberIcon) {
 		super(numberIcon);
 		this.value = value;
+		nextToEmpty = setFalse;
+	}
+	
+	public void setNextTo(boolean isNextToEmpty) {
+		nextToEmpty = isNextToEmpty;
+	}
+	
+	public int getValue() {
+		return value;
 	}
 }
