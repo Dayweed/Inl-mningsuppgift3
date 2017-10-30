@@ -8,7 +8,7 @@ public class NumberButtons extends JButton{
 	private int value;
 	
 	public NumberButtons(){
-		value = -1;
+		value = 16;
 	}
 	
 	public NumberButtons(int value, boolean setFalse, Icon numberIcon) {
@@ -19,6 +19,10 @@ public class NumberButtons extends JButton{
 	
 	public void setNextTo(boolean isNextToEmpty) {
 		nextToEmpty = isNextToEmpty;
+	}
+	
+	public boolean getIfNextTo() {
+		return nextToEmpty;
 	}
 	
 	public int getValue() {
