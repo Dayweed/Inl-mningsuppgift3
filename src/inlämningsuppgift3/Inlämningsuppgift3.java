@@ -15,7 +15,7 @@ public class Inlämningsuppgift3 extends JFrame {
 	}
 	
 	protected void setInstanceVariables() {
-		gamePanel = new GamePanel();
+		gamePanel = new GamePanel(meny);
 		meny = new Meny("New game", "Cancel", gamePanel);
 	}
 	

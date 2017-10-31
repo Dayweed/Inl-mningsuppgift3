@@ -1,5 +1,6 @@
 package inlämningsuppgift3;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,9 @@ import javax.swing.*;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class GamePanel extends JPanel{
+	private JPanel topPanel;
+	private JPanel bottomPanel;
+	private JLabel gameInfoText;
 	protected NumberButtons[][] numericButtons = new NumberButtons[4][4];
 	private ButtonListener buttonEventListener = new ButtonListener();
 	private List<String> imageFileNames = new ArrayList<>();
@@ -18,14 +22,14 @@ public class GamePanel extends JPanel{
 	protected final Path imageFolderPath = Paths.get(path);
 	private Position positionOfEmpty = new Position();
 	
-	public GamePanel() {
+	public GamePanel(Meny meny) {
 		loadImagesFromFolder(imageFolderPath);
 		setInstanceVariables();
 		numericButtons = shuffleDoubleArray();
 		setPositionOfEmpty();
 		setNextToEmpty();
-		addComponents();
 		setLayout();
+		addComponents();
 	}
 	
 	protected List<String> loadImagesFromFolder(Path imagesFolder) {
@@ -63,6 +67,9 @@ public class GamePanel extends JPanel{
 				imageCounter++;
 			}
 		}
+		topPanel = new JPanel();
+		bottomPanel = new JPanel();
+		gameInfoText = new JLabel("Try to get all bricks in order :)");
 	}
 	
 	public NumberButtons[][] shuffleDoubleArray() {
@@ -143,13 +150,20 @@ public class GamePanel extends JPanel{
 	protected void addComponents() {
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {
-				add(numericButtons[i][j]);
+				topPanel.add(numericButtons[i][j]);
 			}
-		}
+		};
+		bottomPanel.add(gameInfoText);
+		add(topPanel, BorderLayout.NORTH);
+		add(bottomPanel, BorderLayout.SOUTH);
 	}
 	
-	protected void setLayout() {		
-		setLayout(new GridLayout(4, 4, 0, 0));
+	protected void setLayout() {
+		setLayout(new BorderLayout());
+		topPanel.setLayout(new GridLayout(4, 4, 0, 0));
+		topPanel.setBackground(Color.BLACK);
+		bottomPanel.setBackground(Color.BLACK);
+		gameInfoText.setForeground(Color.WHITE);
 		setBackground(Color.BLACK);
 	}
 	
@@ -177,6 +191,11 @@ public class GamePanel extends JPanel{
 		setNextToEmpty();
 		addComponents();
 		revalidate();
+				for(int i = 0; i < 4; i++) {
+			for(int j = 0; j < 4; j++) {
+				System.out.println(numericButtons[i][j].getValue() + ", ");
+			}
+		}
 	}
 	
 	public void swapButtons(Position position) {
@@ -189,7 +208,9 @@ public class GamePanel extends JPanel{
 	class ButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			int counter = 1;
 			boolean alreadyDoneThat = false;
+			boolean notInOrder = false;
 			for(int i = 0; i < 4; i++) {
 				for(int j = 0; j < 4; j++) {
 					if(e.getSource().equals(numericButtons[i][j]) && numericButtons[i][j].getIfNextTo() && !alreadyDoneThat) {
@@ -197,6 +218,16 @@ public class GamePanel extends JPanel{
 						updater(position);
 						alreadyDoneThat = true;
 					}
+					for(int k = 0; k < 4; k++) {
+						for(int l = 0; l < 4; l++) {
+							if(numericButtons[i][j].getValue() == counter && !notInOrder)
+								counter++;
+							else
+								notInOrder = true;
+						}
+					}
+					if(!notInOrder)
+						meny.changetoWinText();
 				}
 			}
 		}
