@@ -172,6 +172,7 @@ public class GamePanel extends JPanel{
 		setToFalse();
 		setPositionOfEmpty();
 		setNextToEmpty();
+		gameInfoText.setText("Try to get all bricks in order :)");
 		addComponents();
 	}
 	
@@ -191,11 +192,6 @@ public class GamePanel extends JPanel{
 		setNextToEmpty();
 		addComponents();
 		revalidate();
-				for(int i = 0; i < 4; i++) {
-			for(int j = 0; j < 4; j++) {
-				System.out.println(numericButtons[i][j].getValue() + ", ");
-			}
-		}
 	}
 	
 	public void swapButtons(Position position) {
@@ -208,9 +204,9 @@ public class GamePanel extends JPanel{
 	class ButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int counter = 1;
 			boolean alreadyDoneThat = false;
-			boolean notInOrder = false;
+			String valueOrder = "";
+			String winningValueOrder = "12345678910111213141516";
 			for(int i = 0; i < 4; i++) {
 				for(int j = 0; j < 4; j++) {
 					if(e.getSource().equals(numericButtons[i][j]) && numericButtons[i][j].getIfNextTo() && !alreadyDoneThat) {
@@ -220,14 +216,14 @@ public class GamePanel extends JPanel{
 					}
 					for(int k = 0; k < 4; k++) {
 						for(int l = 0; l < 4; l++) {
-							if(numericButtons[i][j].getValue() == counter && !notInOrder)
-								counter++;
-							else
-								notInOrder = true;
+								valueOrder += numericButtons[k][l].getValue();
 						}
 					}
-					if(!notInOrder)
-						meny.changetoWinText();
+					System.out.println(valueOrder);
+					if(valueOrder.equals(winningValueOrder)) {
+						gameInfoText.setText("You Won!");
+					}
+					valueOrder = "";
 				}
 			}
 		}
