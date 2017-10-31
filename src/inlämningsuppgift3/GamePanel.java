@@ -1,6 +1,5 @@
 package inlämningsuppgift3;
 
-import static inlämningsuppgift3.Fel.gamePanel;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -29,31 +28,6 @@ public class GamePanel extends JPanel{
 		setLayout();
 	}
 	
-	protected void setInstanceVariables() {
-		int imageCounter = 0;
-		for(int i = 0; i < 4; i++) {
-			for(int j = 0; j < 4; j++) {
-				if(i == 3 && j == 3) {
-					numericButtons[i][j] = new NumberButtons();
-					numericButtons[i][j].setBorder(null);
-					numericButtons[i][j].setFocusPainted(false);
-					numericButtons[i][j].setContentAreaFilled(false);
-					numericButtons[i][j].addActionListener(buttonEventListener);
-					numericButtons[i][j].setActionCommand(imageCounter + 1 + "");
-				}
-				else {
-					numericButtons[i][j] = new NumberButtons(imageCounter + 1, false, new ImageIcon(path + imageFileNames.get(imageCounter)));
-					numericButtons[i][j].setBorder(null);
-					numericButtons[i][j].setFocusPainted(false);
-					numericButtons[i][j].setContentAreaFilled(false);
-					numericButtons[i][j].addActionListener(buttonEventListener);
-					numericButtons[i][j].setActionCommand(imageCounter + 1 + "");
-				}
-				imageCounter++;
-			}
-		}
-	}
-	
 	protected List<String> loadImagesFromFolder(Path imagesFolder) {
 		try(DirectoryStream<Path> stream = Files.newDirectoryStream(imagesFolder)) {
 			for(Path currentFile: stream) {
@@ -66,17 +40,29 @@ public class GamePanel extends JPanel{
 		return imageFileNames;
 	}
 	
-	protected void addComponents() {
+	protected void setInstanceVariables() {
+		int imageCounter = 0;
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {
-				add(numericButtons[i][j]);
+				if(i == 3 && j == 3) {
+					numericButtons[i][j] = new NumberButtons();
+					numericButtons[i][j].setBorder(null);
+					numericButtons[i][j].setFocusPainted(false);
+					numericButtons[i][j].setContentAreaFilled(false);
+					numericButtons[i][j].addActionListener(buttonEventListener);
+					numericButtons[i][j].setActionCommand("16");
+				}
+				else {
+					numericButtons[i][j] = new NumberButtons(imageCounter + 1, false, new ImageIcon(path + imageFileNames.get(imageCounter)));
+					numericButtons[i][j].setBorder(null);
+					numericButtons[i][j].setFocusPainted(false);
+					numericButtons[i][j].setContentAreaFilled(false);
+					numericButtons[i][j].addActionListener(buttonEventListener);
+					numericButtons[i][j].setActionCommand(imageCounter + 1 + "");
+				}
+				imageCounter++;
 			}
 		}
-	}
-	
-	protected void setLayout() {		
-		setLayout(new GridLayout(4, 4, 0, 0));
-		setBackground(Color.BLACK);
 	}
 	
 	public NumberButtons[][] shuffleDoubleArray() {
@@ -95,14 +81,6 @@ public class GamePanel extends JPanel{
 		return numericButtons;
 	}
 	
-	public void resetter() {
-		numericButtons = shuffleDoubleArray();
-		setToFalse();
-		setPositionOfEmpty();
-		setNextToEmpty();
-		addComponents();
-	}
-	
 	public void setPositionOfEmpty() {
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {
@@ -112,17 +90,9 @@ public class GamePanel extends JPanel{
 				}
 			}
 		}
-		System.out.println(positionOfEmpty.getFirstPosition());
-		System.out.println(positionOfEmpty.getSecondPosition());
-		System.out.println(numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()].getValue());
-	}
-	
-	public void setToFalse() {
-		for(int i = 0; i < 4; i++) {
-			for(int j = 0; j < 4; j++) {
-				numericButtons[i][j].setNextTo(false);
-			}
-		}
+//		System.out.println(positionOfEmpty.getFirstPosition());
+//		System.out.println(positionOfEmpty.getSecondPosition());
+//		System.out.println(numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()].getValue());
 	}
 	
 	public void setNextToEmpty() {
@@ -168,52 +138,64 @@ public class GamePanel extends JPanel{
 			numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition() + 1].setNextTo(true);
 			numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition() - 1].setNextTo(true);
 		}
-//		for(int i = 0; i < 4; i++) {
-//			for(int j = 0; j < 4; j++) {
-//				System.out.println(numericButtons[i][j].getIfNextTo());
-//			}
-//		}
 	}
 	
-	public void swapButtons(NumberButtons triggeredButton) {
+	protected void addComponents() {
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {
-				if(triggeredButton.equals(numericButtons[i][j])) {
-					NumberButtons temp;
-					temp = numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()];
-					numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()] = numericButtons[i][j];
-					numericButtons[i][j] = temp;
-					addComponents();
-//					for(int k = 0; k < 4; k++) {
-//						for(int l = 0; l < 4; l++) {
-//							remove(numericButtons[k][l]);
-//						}
-//					}
-//					for(int t = 0; t < 4; t++) {
-//						for(int s = 0; s < 4; s++) {
-//							add(numericButtons[t][s]);
-//						}
-//					}
-				}	
+				add(numericButtons[i][j]);
 			}
 		}
 	}
 	
-	public void updater(NumberButtons updateButton) {
-		swapButtons(updateButton);
-		revalidate();
+	protected void setLayout() {		
+		setLayout(new GridLayout(4, 4, 0, 0));
+		setBackground(Color.BLACK);
+	}
+	
+	public void resetter() {
+		numericButtons = shuffleDoubleArray();
 		setToFalse();
 		setPositionOfEmpty();
 		setNextToEmpty();
+		addComponents();
+	}
+	
+	public void setToFalse() {
+		for(int i = 0; i < 4; i++) {
+			for(int j = 0; j < 4; j++) {
+				numericButtons[i][j].setNextTo(false);
+			}
+		}
+	}
+	
+	public void updater(Position position) {
+		removeAll();
+		swapButtons(position);
+		setToFalse();
+		setPositionOfEmpty();
+		setNextToEmpty();
+		addComponents();
+		revalidate();
+	}
+	
+	public void swapButtons(Position position) {
+		NumberButtons temp;
+		temp = numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()];
+		numericButtons[positionOfEmpty.getFirstPosition()][positionOfEmpty.getSecondPosition()] = numericButtons[position.getFirstPosition()][position.getSecondPosition()];
+		numericButtons[position.getFirstPosition()][position.getSecondPosition()] = temp;
 	}
 	
 	class ButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			boolean alreadyDoneThat = false;
 			for(int i = 0; i < 4; i++) {
 				for(int j = 0; j < 4; j++) {
-					if(e.getSource().equals(numericButtons[i][j]) && numericButtons[i][j].getIfNextTo()) {
-						updater(numericButtons[i][j]);
+					if(e.getSource().equals(numericButtons[i][j]) && numericButtons[i][j].getIfNextTo() && !alreadyDoneThat) {
+						Position position = new Position(i, j);
+						updater(position);
+						alreadyDoneThat = true;
 					}
 				}
 			}
